@@ -1,0 +1,222 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Dashboard Template for Bootstrap</title>
+    {% load static %}
+    <!-- Bootstrap core CSS -->
+    <link href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link id="bs-css" href="{% get_static_prefix %}devop/css/dashbord.css" rel="stylesheet">
+    <link href="{% get_static_prefix %}fileinput/css/fileinput.css" media="all" rel="stylesheet" type="text/css" />
+    <link href="{% get_static_prefix %}jcrop/css/jquery.Jcrop.css" media="all" rel="stylesheet" type="text/css" />
+
+     <script src="{% get_static_prefix %}devop/js/jquery-2.1.1.min.js" ></script>
+    <script src="{% get_static_prefix %}devop/js/ajax.js" ></script>
+    <script src="{% get_static_prefix %}devop/js/addQuestion.js" ></script>
+
+    <script src="{% get_static_prefix %}fileinput/js/fileinput.min.js" type="text/javascript"></script>
+    <script src="{% get_static_prefix %}fileinput/js/fileinput_locale_fr.js" type="text/javascript"></script>
+    <script src="{% get_static_prefix %}fileinput/js/fileinput_locale_es.js" type="text/javascript"></script>
+    <script src="{% get_static_prefix %}jcrop/js/jquery.Jcrop.js" type="text/javascript"></script>
+
+    <script src="{% get_static_prefix %}bootstrap/js/bootstrap.min.js"></script>
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+ <script type="text/javascript">
+
+
+</script>
+
+
+<style type="text/css">
+
+/* Apply these styles only when #preview-pane has
+   been placed within the Jcrop widget */
+.jcrop-holder #preview-pane {
+  display: block;
+  position: absolute;
+  z-index: 2000;
+  top: 10px;
+  right: -280px;
+  padding: 6px;
+  border: 1px rgba(0,0,0,.4) solid;
+  background-color: white;
+
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+
+  -webkit-box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* The Javascript code will set the aspect ratio of the crop
+   area based on the size of the thumbnail preview,
+   specified here */
+#preview-pane .preview-container {
+  width: 250px;
+  height: 170px;
+  overflow: hidden;
+}
+
+</style>
+
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">知识库</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Welcome {{user}}</a></li>
+            <li><a href="/logout">Logout</a></li>
+          </ul>
+          <!--<form class="navbar-form navbar-right">-->
+            <!--<input type="text" class="form-control" placeholder="Search...">-->
+          <!--</form>-->
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li class="active"><a href="/add_question/">新增问题 <span class="sr-only">(current)</span></a></li>
+            <li><a href="/my_question/">我的问题</a></li>
+            <li><a href="/my_account/">我的收益</a></li>
+          </ul>
+        </div>
+
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <ul id="addTab" class="nav nav-pills" role="tablist">
+              <li  class="active"><a href="#addpicture" role="tab">猜图片</a></li>
+              <li><a href="#addmusic" role="tab" >猜歌曲</a></li>
+              <li><a href="#addidiom"  role="tab" >猜成语</a></li>
+            </ul>
+
+
+        <div id="formdiv">
+            <form enctype="multipart/form-data" id="addform">
+                {% csrf_token %}
+                  <!-- 选项卡面板 -->
+                    <div id="addTabContent" class="tab-content">
+                        <!--图片-->
+                        <div class="tab-pane active" id="addpicture">
+                            <div class="page-header">
+                                 <h2>上传图片</h2>
+                            </div>
+                            <div class="container">
+                            <div class="row">
+                            <div class="span12">
+                            <div class="jc-demo-box">
+                            <img id="img_preview"  style="display:none" src="../media/picture/main.jpg"   alt="[Jcrop Example]" />
+                             <div id="preview-pane">
+                                <div class="preview-container">
+                                  <img id="img_preview-pane" src="../media/picture/main.jpg" class="jcrop-preview" alt="Preview" />
+                                </div>
+                             </div>
+                             <div class="clearfix"></div>
+                             </div>
+                             </div>
+                             </div>
+                             </div>
+                            <br>
+                            <label>注意：图片需为中国的风景，图片最小为 320* 240  最大为：760 * 480  图片要求画质清晰</label>
+                            <input id="file-pic" class="file" type="file" showPreview="false" multiple="false" data-max-file-count="1" accept="image/*">
+                                <br>
+                         </div>
+                        <!--歌曲-->
+                        <div class="tab-pane fade" id="addmusic">
+                            <div class="page-header">
+                                 <h2>上传歌曲</h2>
+                            </div>
+                            <label>注意：歌曲要求最小为7秒，最多为13秒 。</label>
+                            <input id="file-music" class="file" type="file" multiple data-min-file-count="1" accept="audio/*">
+                             <br>
+                         </div>
+                        <!--成语-->
+                        <div class="tab-pane fade" id="addidiom">
+                             <div class="page-header">
+                             <h2>填成语</h2>
+                             </div>
+                        </div>
+                    </div>
+                    <input type="hidden" id="type" value="#addpicture">
+                    <input type="hidden" id="attach_pic" value="">
+                    <input type="hidden" id="attach_music" value="">
+
+                    <input type="text" id="title" class="form-control" placeholder="输入要问的问题">
+                    <br>
+                        <input type="text" id="optionA" class="form-control" placeholder="输入选项A">
+                    <br>
+                    <input type="text" id="optionB" class="form-control" placeholder="输入选项B">
+                    <br>
+                    <input type="text" id="optionC" class="form-control" placeholder="输入选项C">
+                    <br>
+                    <input type="text" id="optionD" class="form-control" placeholder="输入选项D">
+                    <br>
+                    <label style="margin-right:5px"><input type="radio" id="radioA" name="optionsRadios" value="A" checked>&nbsp;A</label>
+                    <label style="margin-right:5px"><input type="radio" id="radioB" name="optionsRadios" value="B" >&nbsp;B</label>
+                    <label style="margin-right:5px"><input type="radio" id="radioC" name="optionsRadios" value="C" >&nbsp;C</label>
+                    <label style="margin-right:5px"><input type="radio" id="radioD" name="optionsRadios" value="D" >&nbsp;D</label>
+                    <br>
+                    <button type="button" id="add_question" class="btn btn-primary" >提交</button>
+                    <button type="reset" class="btn btn-default">重置</button>
+                </form>
+        </div>
+
+
+
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+        $(window).load(function(){
+
+        $("#aticleContent img").each(function(){
+
+             alert($(this).width())
+
+            });
+
+         })
+    </script>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>-->
+
+
+
+    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+  </body>
+</html>

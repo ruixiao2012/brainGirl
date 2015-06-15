@@ -1,0 +1,117 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Dashboard Template for Bootstrap</title>
+    {% load static %}
+    <!-- Bootstrap core CSS -->
+    <link href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link id="bs-css" href="{% get_static_prefix %}devop/css/dashbord.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">知识库</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Welcome {{user}}</a></li>
+            <li><a href="/logout">Logout</a></li>
+          </ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar" id="side_bar">
+           <ul class="nav nav-sidebar">
+            <li><a href="/add_question/" role="menuitem">新增问题 <span class="sr-only">(current)</span></a></li>
+            <li class="active"><a href="/my_question/" role="menuitem">我的问题</a></li>
+            <li><a href="/my_account/" role="menuitem">我的收益</a></li>
+          </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h1 class="page-header">问题状态</h1>
+
+
+          <div class="table-responsive">
+            <table class="table table-striped table-hover">
+              <thead>
+                <tr>
+                  <th style="text-align:center">序号</th>
+                  <th style="text-align:center">类型</th>
+                  <th style="text-align:center">题目</th>
+                  <th style="text-align:center">选项</th>
+                  <th style="text-align:center">答案</th>
+                  <th style="text-align:center">文件</th>
+                  <th style="text-align:center">状态</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for item in question_list %}
+                <tr>
+                  <td style="text-align:center">{{ item.id}}</td>
+                  <td style="text-align:center">{{ item.type }}</td>
+                  <td style="text-align:left">{{ item.title }}</td>
+                  <td style="text-align:left">{{ item.option|safe }}</td>
+                  <td style="text-align:center">{{ item.answer }}</td>
+                  <td style="text-align:center">
+                      {% if item.imgattach  %}
+                      <img src="{{ item.imgattach }}"  class="img-thumbnail" width="220px">
+                      {% endif %}
+                      {% if item.audattach  %}
+                      <audio src="{{ item.audattach }}"  controls="controls" >
+                         Your browser does not support the audio element.
+                      </audio>
+                      {% endif %}
+                  </td>
+                  <td style="text-align:center">{{ item.adopt }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+    <script src="{% get_static_prefix %}devop/js/ajax.js" ></script>
+
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+
+  </body>
+</html>

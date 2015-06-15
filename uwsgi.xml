@@ -1,0 +1,13 @@
+<uwsgi> 
+  <socket>127.0.0.1:8000</socket> 
+  <listen>20</listen> 
+  <master>true</master> 
+  <processes>2</processes> 
+  <module>django_wsgi</module> 
+  <pythonpath>/root/xiaorui/testlocalhost</pythonpath>  
+  <profiler>true</profiler> 
+  <memory-report>true</memory-report> 
+  <enable-threads>true</enable-threads> 
+  <logdate>true</logdate> 
+  <limit-as>6048</limit-as> 
+</uwsgi>
