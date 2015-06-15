@@ -132,10 +132,13 @@ $(function(){
         optionD=$('#optionD').val();
         answer=$('input:radio[name="optionsRadios"]:checked').val();
         attach=$('#attach').val();
-        type=$('#type').val();
+        pictype=$('input:radio[name="optPicType"]:checked').val();
+        //alert(pictype)
 
+        type=$('#type').val();
         if(type=='#addpicture'){
             attach=$('#attach_pic').val();
+
         }else if(type=='#addmusic'){
             attach=$('#attach_music').val();
         }else{
@@ -170,6 +173,7 @@ $(function(){
                 url: url,
                 data: {
                     type:type,
+                    pictype:pictype,
                     title: title,
                     optionA: optionA,
                     optionB: optionB,

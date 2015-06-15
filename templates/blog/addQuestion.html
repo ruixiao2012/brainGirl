@@ -150,7 +150,39 @@
                             <br>
                             <label>注意：图片需为中国的风景，图片最小为 320* 240  最大为：760 * 480  图片要求画质清晰</label>
                             <input id="file-pic" class="file" type="file" showPreview="false" multiple="false" data-max-file-count="1" accept="image/*">
-                                <br>
+                            <br>
+                            <label>
+                                <input type="radio" name="optPicType" id="rad_dw" value="动物">
+                                  动物
+                            </label>
+                             <label>
+                                <input type="radio" name="optPicType" id="rad_zw" value="植物">
+                                  植物
+                                 </label>
+                             <label>
+                                <input type="radio" name="optPicType" id="rad_tw" value="天文">
+                                  天文
+                                 </label>
+                             <label>
+                                <input type="radio" name="optPicType" id="rad_rw" value="人物">
+                                  人物
+                                 </label>
+                             <label>
+                                <input type="radio" name="optPicType" id="rad_dl" value="地理">
+                                  地理
+                                 </label>
+                             <label>
+                                <input type="radio" name="optPicType" id="rad_fj" value="风景" checked>
+                                  风景
+                                 </label>
+                             <label>
+                                <input type="radio" name="optPicType" id="rad_dm" value="动漫">
+                                  动漫
+                                 </label>
+                             <label>
+                                <input type="radio" name="optPicType" id="rad_wx" value="武侠">
+                                  武侠
+                            </label>
                          </div>
                         <!--歌曲-->
                         <div class="tab-pane fade" id="addmusic">
@@ -171,6 +203,8 @@
                     <input type="hidden" id="type" value="#addpicture">
                     <input type="hidden" id="attach_pic" value="">
                     <input type="hidden" id="attach_music" value="">
+
+
 
                     <input type="text" id="title" class="form-control" placeholder="输入要问的问题">
                     <br>

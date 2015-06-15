@@ -28,6 +28,8 @@ class Queston(models.Model):
     attach = models.CharField(max_length=500)
     #if adopted
     adopt = models.IntegerField()
+    #mark1
+    mark1= models.CharField(max_length=100)
 
 
 class PictureFile(models.Model):
