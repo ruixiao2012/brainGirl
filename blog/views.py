@@ -112,7 +112,7 @@ def dashbord(request):
 
                 resultArray.append(
                     {'uid':item.id,'id': id, 'author':item.username,'type': retype,'title': item.title,'option':item.options,
-                     'answer':item.answer,'imgattach':imgattachsrc,'audattach':audattachsrc,'adopt':status}
+                     'answer':item.answer,'imgattach':imgattachsrc,'audattach':audattachsrc,'adopt':status,'mark1':item.mark1}
                 )
                 id=id+1
             print resultArray
@@ -167,7 +167,7 @@ def myQuestion(request):
 
                     resultArray.append(
                         {'uid':item.id,'id': id, 'author':item.username,'type': retype,'title': item.title,'option':item.options,
-                         'answer':item.answer,'imgattach':imgattachsrc,'audattach':audattachsrc,'adopt':status}
+                         'answer':item.answer,'imgattach':imgattachsrc,'audattach':audattachsrc,'adopt':status,'mark1':item.mark1}
                     )
                     id=id+1
                 print resultArray
@@ -305,6 +305,8 @@ def addQuestion(request):
 
 def do_addQuestion(request):
     type=request.POST.get('type', '')
+    pictype=request.POST.get('pictype', '')
+    #pictype='aa'
     title = request.POST.get('title', '')
     optionA = request.POST.get('optionA', '')
     optionB = request.POST.get('optionB', '')
@@ -326,7 +328,7 @@ def do_addQuestion(request):
 
     try:
         uname=User.objects.get(username=username)
-        que=Queston(username=uname,type=type,title=title,options=optionlist,answer=answer,attach=attachment,adopt=adopt)
+        que=Queston(username=uname,type=type,title=title,options=optionlist,answer=answer,attach=attachment,adopt=adopt,mark1=pictype)
         que.save()
         result={'data':'true'}
         jresult=json.dumps(result)
@@ -420,8 +422,6 @@ def handle_uploaded_file(f,type):
                         #删除原图片
                         os.remove(file_name)
                         file_name=file_png
-
-
 
                     except Exception, e:
                         print e
